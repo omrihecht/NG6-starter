@@ -1,3 +1,44 @@
-.calculator {
-  color: red;
+@import "../../common/common";
+
+.calculator-holder{ height:calc(100vh - 60px); box-sizing:border-box;
+  background: rgba(63,70,86,1);
+  background: -moz-linear-gradient(top, rgba(63,70,86,1) 0%, rgba(6,26,45,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(63,70,86,1)), color-stop(100%, rgba(6,26,45,1)));
+  background: -webkit-linear-gradient(top, rgba(63,70,86,1) 0%, rgba(6,26,45,1) 100%);
+  background: -o-linear-gradient(top, rgba(63,70,86,1) 0%, rgba(6,26,45,1) 100%);
+  background: -ms-linear-gradient(top, rgba(63,70,86,1) 0%, rgba(6,26,45,1) 100%);
+  background: linear-gradient(to bottom, rgba(63,70,86,1) 0%, rgba(6,26,45,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4656', endColorstr='#061a2d', GradientType=0 );
+
+  *{ box-sizing:border-box; }
+}
+
+.calculator{ position:relative; margin:0 auto; padding:5px;  width:90%; max-width:280px; height:80%; max-height:400px; background-color:#333; top:50%; @include transform(translateY(-50%)); color:white;
+  border-radius:10px; border-top:1px solid white; background-color:#ececec; border-bottom:5px solid black;
+  -webkit-box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.75);
+
+  .inner{ position:relative; width:100%; height:100%; background-color:#5a6cca; border:1px solid #202645; border-radius:5px; overflow:hidden;
+    .screen{ position:relative; width:100%; padding:0 10px; line-height:120px; text-align:right; font-size:2rem; border:3px solid rgba(255,255,255,.3);
+      .mem-num{ position:absolute; top:10px; right:10px; font-size:.8rem; opacity:.5; line-height:1; }
+    }
+
+    .main-ui{ position:relative; overflow:hidden; @include calc(height,'100% - 120px'); background-color:#252f64;
+      button{ -webkit-appearance:none; outline:none; border:none; border:1px solid #252f64; border-bottom-width:3px; border-top-color:#b2b9dc; background-color:#4052ae; height:25%; }
+      button:active{ border-bottom-width:1px; margin-top:2px; @include calc(height,'25% - 2px'); }
+      .fn-btn.reset{ display:block; width:100%; height:20%; }
+      .fn-btn.reset:active{ @include calc(height,'20% - 2px'); }
+      .numbers, .functions{ position:relative; height:80%; }
+      .numbers{ float:left; width:75%;
+        button{ display:block; width:calc(33.33%); float:right; }
+        button:nth-child(10), button:nth-child(11), button:nth-child(12){ float:left; }
+      }
+      .functions{ float:right; width:25%;
+        button{ display:block; width:100%; }
+        button.selected{ background-color:#a79c2b; border-color:#5f5a1a; border-top-color:#c7c398; }
+      }
+    }
+
+  }
 }

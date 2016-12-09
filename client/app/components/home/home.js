@@ -13,13 +13,13 @@ let homeModule = angular.module('home', [
 
   $stateProvider
     .state('home', {
-      url: '/',
+      url: '/home',
       component: 'home'
     });
 })
 
 .component('home', homeComponent)
-  
+
 .name;
 
 export default homeModule;

@@ -1,8 +1,28 @@
 
 <navbar></navbar>
 
-<main>
-  <div>
-    <h1>Found in {{ $ctrl.name }}.html</h1>
+<main class="calculator-holder">
+
+  <div class="calculator">
+    <div class="inner">
+
+      <div class="screen">
+        <span class="mem-num">{{ $ctrl.memVal }} {{ $ctrl.calcFn.activeFn.symbol }}</span>
+        <span class="display-num">{{ $ctrl.displayVal }}</span>
+      </div>
+      <div class="main-ui">
+        <button class="fn-btn reset" ng-click="$ctrl.reset()">c</button>
+        <section class="numbers">
+          <button class="num-btn num-{{ number }}" ng-repeat="number in $ctrl.numbers" ng-click="$ctrl.onNumberClick(number)">{{ number }}</button>
+          <button class="fn-btn equals" ng-click="$ctrl.equals()">=</button>
+        </section>
+        <section class="functions">
+          <button class="fn-btn {{ calcFn.name }}" ng-repeat="calcFn in $ctrl.calcFn.buttons" ng-click="$ctrl.onFnClick(calcFn)" ng-class="{ 'selected' : calcFn.activated }">{{ calcFn.symbol }}</button>
+        </section>
+      </div>
+
+
+    </div>
   </div>
+
 </main>

@@ -10,7 +10,7 @@ let calculatorModule = angular.module('calculator', [
   "ngInject";
   $stateProvider
     .state('calculator', {
-      url: '/calculator',
+      url: '/',
       component: 'calculator'
     });
 })

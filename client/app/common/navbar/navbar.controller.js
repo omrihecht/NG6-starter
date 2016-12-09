@@ -1,6 +1,6 @@
 class NavbarController {
   constructor() {
-    this.name = 'Calculator';
+    this.name = 'Calculator Ex';
   }
 }
 

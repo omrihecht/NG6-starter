@@ -1,7 +1,5 @@
+@import "assests/css/reset.css";
 @import "common/common";
 
-.app {
-  height: 100%;
-  background-color: $lightBgColor;
-}
-
+html{ font-size:16px; }
+body{ font-family:'Ubuntu', sans-serif; }

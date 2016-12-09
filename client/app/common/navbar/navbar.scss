@@ -1,22 +1,10 @@
 @import '../common';
 
-.navbar {
-  height: 6.5rem;
-  background-color: $primaryColor;
-  padding: 1rem;
-
-  .nav-links,
-  .logo {
-    display: inline-block;
-  }
-
-  .logo {
-    color: $lightTextColor;
-    margin-right: 50%;
-  }
-
-  .nav-links span {
-    color: $lightTextColor;
-    font-size: 1.6rem;
+.navbar{ position:relative; width:100%; height:60px; background-color:#8f8f8f; font-size:1rem; line-height:20px; top:0; box-sizing:border-box; border-bottom:1px solid #353535;
+  a{ text-decoration:none; color:#dbdbdb; }
+  h1{ font-size:1.2rem; float:left; margin:20px 0 0 20px; font-weight:600; }
+  .nav-links{ float:right; margin:20px 20px 0 0;
+    a{ font-size:.8rem; display:inline-block; margin-right:10px; padding-right:10px; border-right:1px solid $colors-grey-dark; }
+    a:last-child{ border-right:none; margin-right:0; padding-right:0; }
   }
 }
