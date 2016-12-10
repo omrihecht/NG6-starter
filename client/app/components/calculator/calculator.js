@@ -6,8 +6,12 @@ let calculatorModule = angular.module('calculator', [
   uiRouter
 ])
 
-.config(($stateProvider) => {
+
+.config(($stateProvider, $urlRouterProvider) => {
   "ngInject";
+
+  $urlRouterProvider.otherwise('/');
+
   $stateProvider
     .state('calculator', {
       url: '/',

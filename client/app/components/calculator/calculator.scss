@@ -26,9 +26,10 @@
 
     .main-ui{ position:relative; overflow:hidden; @include calc(height,'100% - 120px'); background-color:#252f64;
       button{ -webkit-appearance:none; outline:none; border:none; border:1px solid #252f64; border-bottom-width:3px; border-top-color:#b2b9dc; background-color:#4052ae; height:25%; }
-      button:active{ border-bottom-width:1px; margin-top:2px; @include calc(height,'25% - 2px'); }
+      button:hover{ background-color:lighten(#4052ae,10%); }
+      button:active, button.active{ border-bottom-width:1px; margin-top:2px; @include calc(height,'25% - 2px'); background-color:darken(#4052ae,10%); }
       .fn-btn.reset{ display:block; width:100%; height:20%; }
-      .fn-btn.reset:active{ @include calc(height,'20% - 2px'); }
+      .fn-btn.reset:active, .fn-btn.reset.active{ @include calc(height,'20% - 2px'); }
       .numbers, .functions{ position:relative; height:80%; }
       .numbers{ float:left; width:75%;
         button{ display:block; width:calc(33.33%); float:right; }
@@ -37,6 +38,8 @@
       .functions{ float:right; width:25%;
         button{ display:block; width:100%; }
         button.selected{ background-color:#a79c2b; border-color:#5f5a1a; border-top-color:#c7c398; }
+        button.selected:hover{ background-color:lighten(#a79c2b,10%); }
+        button.selected:active, button.selected.active{ background-color:darken(#a79c2b,10%); }
       }
     }
 

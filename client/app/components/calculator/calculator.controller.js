@@ -1,5 +1,5 @@
 class CalculatorController {
-  constructor() {
+  constructor( $scope, $timeout ) {
     this.numbers = [9,8,7,6,5,4,3,2,1,0,'.'];
     this.name = 'calculator';
     this.calcFn = {
@@ -34,16 +34,97 @@ class CalculatorController {
     this.displayVal = this.remVal = '0';
     this.memVal = '';
     this.displayValChange = this.fnCalled = false;
+    //angular.element(window).on('keydown', this.onKeyDown.bind(this) );
 
-    //window.addEventListener('keydown', this.onKeyDown );
+    angular.element(window).on('keydown', function(e){
+      //console.log('e.keyCode :: ' + e.keyCode + ', e.key :: ' + e.key);
+      if( e.key >= 0 && e.key <=9 || e.key == '.' ){
+        this.onNumberClick(e.key);
+        this.indicateBtn( 'num-' + e.key );
+        $scope.$apply();
+      }
+      if( e.key == '+' ){
+        this.onFnClick(this.calcFn.buttons[0]);
+        this.indicateBtn( this.calcFn.buttons[0].name );
+        $scope.$apply();
+      }
+      if( e.key == '-' ){
+        this.onFnClick(this.calcFn.buttons[1]);
+        this.indicateBtn( this.calcFn.buttons[1].name );
+        $scope.$apply();
+      }
+      if( e.key == '*' ){
+        this.onFnClick(this.calcFn.buttons[2]);
+        this.indicateBtn( this.calcFn.buttons[2].name );
+        $scope.$apply();
+      }
+      if( e.key == '/' ){
+        this.onFnClick(this.calcFn.buttons[3]);
+        this.indicateBtn( this.calcFn.buttons[3].name );
+        $scope.$apply();
+      }
+      if( e.key == 'Enter' || e.key == '=' ){
+        this.equals();
+        this.indicateBtn( 'equals' );
+        $scope.$apply();
+      }
+      if( e.key == 'Backspace' || e.key == 'Delete' ){
+        this.reset();
+        this.indicateBtn( 'reset' );
+        $scope.$apply();
+      }
+    }.bind(this));
 
   }
 
   onKeyDown(e){
-    debugger
-    /*if( e.keyCode >= 48 && e.keyCode <=57 ){
+    //console.log('e.keyCode :: ' + e.keyCode + ', e.key :: ' + e.key);
+    if( e.key >= 0 && e.key <=9 || e.key == '.' ){
       this.onNumberClick(e.key);
-    }*/
+      this.indicateBtn( 'num-' + e.key );
+      $scope.$apply();
+    }
+    if( e.key == '+' ){
+      this.onFnClick(this.calcFn.buttons[0]);
+      this.indicateBtn( this.calcFn.buttons[0].name );
+      $scope.$apply();
+    }
+    if( e.key == '-' ){
+      this.onFnClick(this.calcFn.buttons[1]);
+      this.indicateBtn( this.calcFn.buttons[1].name );
+      $scope.$apply();
+    }
+    if( e.key == '*' ){
+      this.onFnClick(this.calcFn.buttons[2]);
+      this.indicateBtn( this.calcFn.buttons[2].name );
+      $scope.$apply();
+    }
+    if( e.key == '/' ){
+      this.onFnClick(this.calcFn.buttons[3]);
+      this.indicateBtn( this.calcFn.buttons[3].name );
+      $scope.$apply();
+    }
+    if( e.key == 'Enter' || e.key == '=' ){
+      this.equals();
+      this.indicateBtn( 'equals' );
+      $scope.$apply();
+    }
+    if( e.key == 'Backspace' || e.key == 'Delete' ){
+      this.reset();
+      this.indicateBtn( 'reset' );
+      $scope.$apply();
+    }
+  }
+
+  indicateBtn( className ){
+    var el = document.getElementsByClassName(className);
+    el[0].classList.add('active');
+    /*$timeout(function(){
+      el[0].classList.remove('active');
+    },50);*/
+    setTimeout(function(){
+      el[0].classList.remove('active');
+    }.bind(el),150);
   }
 
   onNumberClick( numVal ){
@@ -97,10 +178,11 @@ class CalculatorController {
   reset(){
     console.log('reset');
     this.displayVal = this.remVal = '0';
+    this.memVal = '';
     this.displayValChange = this.fnCalled = false;
     this.calcFn.activeFn = null;
     this.equals();
   }
 }
-
+CalculatorController.$inject = ['$scope','$timeout']
 export default CalculatorController;
