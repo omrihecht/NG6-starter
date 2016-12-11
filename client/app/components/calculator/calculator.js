@@ -1,7 +1,8 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import calculatorComponent from './calculator.component';
-import onKeyDown from './keydown.directive.js';
+//import onKeyDown from './keydown.directive.js';
+import calculatorService from './calculator.service.js';
 
 let calculatorModule = angular.module('calculator', [uiRouter])
 
@@ -21,6 +22,9 @@ let calculatorModule = angular.module('calculator', [uiRouter])
 .component('calculator', calculatorComponent)
 .directive({
   //onKeyDown
+})
+.service({
+  calculatorService
 })
 
 

@@ -1,32 +1,59 @@
 
 class CalculatorController {
-  constructor( $scope, $timeout ) {
+  constructor( $scope, $timeout, calculatorService ) {
     this.numbers = [9,8,7,6,5,4,3,2,1,0,'.'];
     this.name = 'calculator';
+    this.fnButtons = ['+', '-', 'x', '÷'];
+    this.calcFuncs = {
+      '+' : {
+        name      : 'add',
+        activated : false,
+        action    : calculatorService.add,
+        symbol    : '+'
+      },
+      '-' : {
+        name      : 'subtract',
+        activated : false,
+        action    : calculatorService.subtract,
+        symbol    : '-'
+      },
+      'x' : {
+        name      : 'multiply',
+        activated : false,
+        action    : calculatorService.multiply,
+        symbol    : 'x'
+      },
+      '÷' : {
+        name      : 'devide',
+        activated : false,
+        action    : calculatorService.devide,
+        symbol    : '÷'
+      }
+    }
     this.calcFn = {
       buttons: [
         {
           name      : 'add',
           activated : false,
-          action    : this.add,
+          action    : calculatorService.add,
           symbol    : '+'
         },
         {
           name      : 'subtract',
           activated : false,
-          action    : this.subtract,
+          action    : calculatorService.subtract,
           symbol    : '-'
         },
         {
           name      : 'multiply',
           activated : false,
-          action    : this.multiply,
+          action    : calculatorService.multiply,
           symbol    : 'x'
         },
         {
           name      : 'devide',
           activated : false,
-          action    : this.devide,
+          action    : calculatorService.devide,
           symbol    : '÷'
         },
       ],
@@ -37,7 +64,7 @@ class CalculatorController {
     this.displayValChange = this.fnCalled = false;
     this.$scope = $scope;
 
-    document.getElementsByClassName('calculator-holder')[0].focus();
+    //document.getElementsByClassName('calculator-holder')[0].focus();
   }
 
   onKeyDown(e){
@@ -92,8 +119,9 @@ class CalculatorController {
     this.displayVal = this.displayVal.toString() + numVal.toString();
   }
 
-  onFnClick( calcFn ){
+  onFnClick( calcFnBtn ){
     this.equals();
+    var calcFn = this.calcFuncs[calcFnBtn]
     this.memVal = this.displayVal;
     this.calcFn.activeFn = calcFn;
     calcFn.activated = true;
@@ -101,22 +129,6 @@ class CalculatorController {
     this.displayValChange = false;
   }
 
-  add(a,b){
-    console.log('add');
-    return a + b;
-  }
-  subtract(a,b){
-    console.log('subtract');
-    return a - b;
-  }
-  multiply(a,b){
-    console.log('multiply');
-    return a * b;
-  }
-  devide(a,b){
-    console.log('devide');
-    return a / b;
-  }
   equals(){
     console.log('equals');
     this.calcFn.buttons.forEach(function(obj){
@@ -128,6 +140,7 @@ class CalculatorController {
     this.calcFn.activeFn = null;
     this.memVal = '';
   }
+
   reset(){
     console.log('reset');
     this.displayVal = this.remVal = '0';
@@ -137,5 +150,5 @@ class CalculatorController {
     this.equals();
   }
 }
-CalculatorController.$inject = ['$scope','$timeout']
+CalculatorController.$inject = ['$scope','$timeout','calculatorService']
 export default CalculatorController;

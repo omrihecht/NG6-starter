@@ -17,7 +17,7 @@
           <button class="fn-btn equals" ng-click="$ctrl.equals()">=</button>
         </section>
         <section class="functions">
-          <button class="fn-btn {{ calcFn.name }}" ng-repeat="calcFn in $ctrl.calcFn.buttons" ng-click="$ctrl.onFnClick(calcFn)" ng-class="{ 'selected' : calcFn.activated }">{{ calcFn.symbol }}</button>
+          <button class="fn-btn fn-{{ calcFn }}" ng-repeat="calcFn in $ctrl.fnButtons" ng-click="$ctrl.onFnClick(calcFn)" ng-class="{ 'selected' : calcFn.activated }">{{ calcFn }}</button>
         </section>
       </div>
 
