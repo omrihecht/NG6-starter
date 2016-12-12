@@ -30,38 +30,10 @@ class CalculatorController {
         symbol    : '÷'
       }
     }
-    this.calcFn = {
-      buttons: [
-        {
-          name      : 'add',
-          activated : false,
-          action    : calculatorService.add,
-          symbol    : '+'
-        },
-        {
-          name      : 'subtract',
-          activated : false,
-          action    : calculatorService.subtract,
-          symbol    : '-'
-        },
-        {
-          name      : 'multiply',
-          activated : false,
-          action    : calculatorService.multiply,
-          symbol    : 'x'
-        },
-        {
-          name      : 'devide',
-          activated : false,
-          action    : calculatorService.devide,
-          symbol    : '÷'
-        },
-      ],
-      activeFn      : null
-    };
     this.displayVal = this.remVal = '0';
     this.memVal = '';
     this.displayValChange = this.fnCalled = false;
+    this.activeFn = null;
     this.$scope = $scope;
 
     //document.getElementsByClassName('calculator-holder')[0].focus();
@@ -73,21 +45,12 @@ class CalculatorController {
       this.onNumberClick(e.key);
       this.indicateBtn( 'num-' + e.key );
     }
-    if( e.key == '+' ){
-      this.onFnClick(this.calcFn.buttons[0]);
-      this.indicateBtn( this.calcFn.buttons[0].name );
-    }
-    if( e.key == '-' ){
-      this.onFnClick(this.calcFn.buttons[1]);
-      this.indicateBtn( this.calcFn.buttons[1].name );
-    }
-    if( e.key == '*' ){
-      this.onFnClick(this.calcFn.buttons[2]);
-      this.indicateBtn( this.calcFn.buttons[2].name );
-    }
-    if( e.key == '/' ){
-      this.onFnClick(this.calcFn.buttons[3]);
-      this.indicateBtn( this.calcFn.buttons[3].name );
+    if( e.key == '+' || e.key == '-' || e.key == '*' || e.key == '/' ){
+      var key = e.key;
+      if( key == '*' ) key = 'x';
+      if( key == '/' ) key = '÷';
+      this.onFnClick( key );
+      this.indicateBtn( 'fn-' + key );
     }
     if( e.key == 'Enter' || e.key == '=' ){
       this.equals();
@@ -122,8 +85,8 @@ class CalculatorController {
   onFnClick( calcFnBtn ){
     this.equals();
     var calcFn = this.calcFuncs[calcFnBtn]
-    this.memVal = this.displayVal;
-    this.calcFn.activeFn = calcFn;
+    this.memVal = this.displayVal + ' ' + calcFnBtn;
+    this.activeFn = calcFn;
     calcFn.activated = true;
     this.fnCalled = true;
     this.displayValChange = false;
@@ -131,13 +94,13 @@ class CalculatorController {
 
   equals(){
     console.log('equals');
-    this.calcFn.buttons.forEach(function(obj){
-      obj.activated = false;
+    this.fnButtons.forEach(function(obj){
+      //obj.activated = false;
     });
-    if( !this.displayValChange || !this.calcFn.activeFn ) return;
-    this.displayVal = this.calcFn.activeFn.action( parseFloat(this.remVal) , parseFloat(this.displayVal) );
+    if( !this.displayValChange || !this.activeFn ) return;
+    this.displayVal = this.activeFn.action( parseFloat(this.remVal) , parseFloat(this.displayVal) );
     this.remVal = this.displayVal;
-    this.calcFn.activeFn = null;
+    this.activeFn = null;
     this.memVal = '';
   }
 
@@ -146,7 +109,7 @@ class CalculatorController {
     this.displayVal = this.remVal = '0';
     this.memVal = '';
     this.displayValChange = this.fnCalled = false;
-    this.calcFn.activeFn = null;
+    this.activeFn = null;
     this.equals();
   }
 }
