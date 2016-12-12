@@ -40,8 +40,8 @@ class CalculatorController {
   }
 
   onKeyDown(e){
-    console.log('e.keyCode 2 :: ' + e.keyCode + ', e.key 1 :: ' + e.key);
-    if( e.key >= 0 && e.key <=9 || e.key == '.' ){
+    console.log('e.keyCode :: ' + e.keyCode + ', e.key :: ' + e.key);
+    if( ( e.key >= 0 && e.key <=9 && e.key != ' ' ) || e.key == '.' ){
       this.onNumberClick(e.key);
       this.indicateBtn( 'num-' + e.key );
     }
@@ -56,9 +56,9 @@ class CalculatorController {
       this.equals();
       this.indicateBtn( 'equals' );
     }
-    if( e.key == 'Backspace' || e.key == 'Delete' || e.keyCode == 2 ){
+    if( e.key == 'Backspace' || e.key == 'Delete' || e.keyCode == 32 || e.key == 'c' ){
       this.reset();
-      this.indicateBtn( 'reset' );
+      this.indicateBtn( 'reset' )
     }
   }
 
