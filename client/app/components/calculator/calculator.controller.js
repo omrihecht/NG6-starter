@@ -35,6 +35,7 @@ class CalculatorController {
     this.displayValChange = this.fnCalled = false;
     this.activeFn = null;
     this.$scope = $scope;
+    this.$timeout = $timeout;
 
     //document.getElementsByClassName('calculator-holder')[0].focus();
   }
@@ -65,7 +66,7 @@ class CalculatorController {
   indicateBtn( className ){
     var el = document.getElementsByClassName(className);
     el[0].classList.add('active');
-    setTimeout(function(){
+    this.$timeout(function(){
       el[0].classList.remove('active');
     }.bind(el),150);
   }
