@@ -30,10 +30,36 @@ class CalculatorController {
         symbol    : '÷'
       }
     }
+
+    this.keyObj = (eKey) => {
+      var keys = {
+        '+'         : { symbol : '+', action : this.onFnClick },
+        '-'         : { symbol : '-', action : this.onFnClick },
+        '*'         : { symbol : 'x', action : this.onFnClick },
+        '/'         : { symbol : '÷', action : this.onFnClick },
+        'Enter'     : { symbol : 'equals', action : this.equals },
+        '='         : { symbol : 'equals', action : this.equals },
+        'Backspace' : { symbol : 'reset', action : this.reset },
+        'Delete'    : { symbol : 'reset', action : this.reset },
+        'Space'     : { symbol : 'reset', action : this.reset },
+        'c'         : { symbol : 'reset', action : this.reset },
+        'default'   : { symbol : '', action : null }
+      }
+      var funcKey = (  keys[eKey]) ? keys[eKey] : keys['default'];
+      var isNumber = ( ( eKey >= 0 && eKey <=9 && eKey != ' ' ) || eKey == '.' );
+      var calc = this;
+      return {
+        key   : isNumber ? eKey : funcKey.symbol,
+        func  : isNumber ? this.onNumberClick : funcKey.action,
+        calc  : calc
+      };
+    }
+
     this.displayVal = this.remVal = '0';
     this.memVal = '';
     this.displayValChange = this.fnCalled = false;
     this.activeFn = null;
+    this.activeBtn = null;
     this.$scope = $scope;
     this.$timeout = $timeout;
 
@@ -42,36 +68,25 @@ class CalculatorController {
 
   onKeyDown(e){
     console.log('e.keyCode :: ' + e.keyCode + ', e.key :: ' + e.key);
-    if( ( e.key >= 0 && e.key <=9 && e.key != ' ' ) || e.key == '.' ){
-      this.onNumberClick(e.key);
-      this.indicateBtn( 'num-' + e.key );
-    }
-    if( e.key == '+' || e.key == '-' || e.key == '*' || e.key == '/' ){
-      var key = e.key;
-      if( key == '*' ) key = 'x';
-      if( key == '/' ) key = '÷';
-      this.onFnClick( key );
-      this.indicateBtn( 'fn-' + key );
-    }
-    if( e.key == 'Enter' || e.key == '=' ){
-      this.equals();
-      this.indicateBtn( 'equals' );
-    }
-    if( e.key == 'Backspace' || e.key == 'Delete' || e.keyCode == 32 || e.key == 'c' ){
-      this.reset();
-      this.indicateBtn( 'reset' )
+
+    var keyObj = this.keyObj(e.key);
+    console.dir( keyObj );
+    if( keyObj.key != '' && keyObj.func != null ){
+      keyObj.func( keyObj.key );
+      this.indicateBtn( keyObj.key )
     }
   }
 
-  indicateBtn( className ){
-    var el = document.getElementsByClassName(className);
-    el[0].classList.add('active');
-    this.$timeout(function(){
-      el[0].classList.remove('active');
-    }.bind(el),150);
+  indicateBtn( keyVal ){
+    this.activeBtn = keyVal;
+    this.$timeout( () => {
+      this.activeBtn = null;
+    }, 150);
   }
 
   onNumberClick( numVal ){
+    debugger
+    //this = (this.calc) ? this.calc : this;
     this.displayValChange = true;
     if( this.fnCalled ){
       this.remVal = this.displayVal;
@@ -95,9 +110,9 @@ class CalculatorController {
 
   equals(){
     console.log('equals');
-    this.fnButtons.forEach(function(obj){
-      //obj.activated = false;
-    });
+    /*this.fnButtons.forEach(function(obj){
+      obj.activated = false;
+    });*/
     if( !this.displayValChange || !this.activeFn ) return;
     this.displayVal = this.activeFn.action( parseFloat(this.remVal) , parseFloat(this.displayVal) );
     this.remVal = this.displayVal;

@@ -11,13 +11,13 @@
         <span class="display-num">{{ $ctrl.displayVal }}</span>
       </div>
       <div class="main-ui">
-        <button class="fn-btn reset" ng-click="$ctrl.reset()">c</button>
+        <button class="fn-btn reset" ng-click="$ctrl.reset()" ng-class="{ 'active' : 'reset' == $ctrl.activeBtn }" >c</button>
         <section class="numbers">
-          <button class="num-btn num-{{ number }}" ng-repeat="number in $ctrl.numbers" ng-click="$ctrl.onNumberClick(number)">{{ number }}</button>
-          <button class="fn-btn equals" ng-click="$ctrl.equals()">=</button>
+          <button class="num-btn num-{{ number }}" ng-repeat="number in $ctrl.numbers" ng-click="$ctrl.onNumberClick(number)" ng-class="{ 'active' : number.toString() == $ctrl.activeBtn }" >{{ number }}</button>
+          <button class="fn-btn equals" ng-click="$ctrl.equals()" ng-class="{ 'active' : 'equals' == $ctrl.activeBtn }" >=</button>
         </section>
         <section class="functions">
-          <button class="fn-btn fn-{{ calcFn }}" ng-repeat="calcFn in $ctrl.fnButtons" ng-click="$ctrl.onFnClick(calcFn)" ng-class="{ 'selected' : calcFn.activated }">{{ calcFn }}</button>
+          <button class="fn-btn fn-{{ calcFn }}" ng-repeat="calcFn in $ctrl.fnButtons" ng-click="$ctrl.onFnClick(calcFn)" ng-class="{ 'selected' : calcFn.activated , 'active' : calcFn == $ctrl.activeBtn }">{{ calcFn }}</button>
         </section>
       </div>
 
