@@ -33,23 +33,26 @@ describe('Calculator', () => {
 
     it('5 + 5 equals 10', () => {
       controller.onNumberClick("5");
-      controller.onNumberClick("5");
       controller.onFnClick('+');
-      expect(controller).displayVal == '10';
+      controller.onNumberClick("5");
+      controller.equals();
+      expect((controller).displayVal).to.equal(10);
     });
 
     it('10 - 5 equals 5', () => {
       controller.onNumberClick("10");
-      controller.onNumberClick("5");
       controller.onFnClick('-');
-      expect(controller).displayVal == '5';
+      controller.onNumberClick("5");
+      controller.equals();
+      expect((controller).displayVal).to.equal(5);
     });
 
     it('5 * 5 equals 25', () => {
       controller.onNumberClick("5");
-      controller.onNumberClick("5");
       controller.onFnClick('x');
-      expect(controller).displayVal == '25';
+      controller.onNumberClick("5");
+      controller.equals();
+      expect((controller).displayVal).to.equal(25);
     });
 
   });
